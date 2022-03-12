@@ -14,10 +14,12 @@ contract VotingBallot {
     address[] public candidates;
     Proposal[] public proposals;
     mapping(address => bool) hasVoted;
+    uint public totalNoOfVotes;
     mapping(address => bool) hasEntered;
 
     function enterCampaign (string memory props, string memory name) public {
         require(!hasEntered[msg.sender]);
+        require(candidates.length < 5);
 
         Proposal memory newProposal = Proposal({
             proposal: props,
@@ -38,5 +40,20 @@ contract VotingBallot {
 
         Proposal storage proposal = proposals[index];
         proposal.noOfVotes++;
+        totalNoOfVotes++;
+        hasVoted[msg.sender] = true;
+    }
+
+    function getIndexOfWinner () public view returns(uint) {
+        uint largest = 0;
+        uint index = 0;
+        for (uint i = 0; i < proposals.length; i++) {
+            if(proposals[i].noOfVotes > largest) {
+                largest = proposals[i].noOfVotes;
+                index = i;
+            }
+        }
+
+        return index;
     }
 }
