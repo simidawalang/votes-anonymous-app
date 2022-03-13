@@ -6,8 +6,9 @@ import React, {
   useEffect,
 } from "react";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import Link from "next/link";
+import Button from "../components/Button";
 import { ethers } from "ethers";
 
 declare global {
@@ -23,11 +24,8 @@ interface PropType {
 }
 
 const Home: NextPage<PropType> = ({ p1 }) => {
-  const nameRef = useRef<HTMLInputElement | null>(null);
-  const proposalRef = useRef<HTMLInputElement | null>(null);
   const [connected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   let accounts;
   useEffect(() => {
@@ -53,15 +51,10 @@ const Home: NextPage<PropType> = ({ p1 }) => {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    const proposalValue = proposalRef.current?.value;
-    const nameValue = nameRef.current?.value;
-  };
+  
 
   return (
-    <div className="">
+    <div className="home-page">
       <Head>
         <title>Votes Anonymous</title>
         <meta name="description" content="An anonymous voting game" />
@@ -72,14 +65,10 @@ const Home: NextPage<PropType> = ({ p1 }) => {
         over.
       </p>
 
-      <button onClick={connectWallet}>
+      <Button onClick={connectWallet} color={`${connected ? 'green' : 'blue'}`}>
         {connected ? "Wallet Connected" : isLoading ? "Loading" : "Connect"}
-      </button>
-      <form onSubmit={handleSubmit}>
-        <input type="text" ref={nameRef} />
-        <input type="text" ref={proposalRef} />
-        <button>Submit</button>
-      </form>
+      </Button>
+      <Link href="/compete">Create Poll</Link>
     </div>
   );
 };

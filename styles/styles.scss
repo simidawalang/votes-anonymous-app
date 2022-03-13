@@ -1,1 +1,32 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Open+Sans:wght@400;700&display=swap');
+
 @import "./utils/colors.scss";
+
+@import "./components/buttons.scss";
+@import "./components/header.scss";
+
+@import "./pages/index.scss";
+@import "./pages/compete.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Lora', serif;
+    background: $light-gray;
+    color: $black;
+}
+
+a, a:hover {
+    color: $dark-green;
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, button {
+ font-family: 'Open Sans', sans-serif;
+ text-transform: uppercase;
+ color: $dark-green;
+}
