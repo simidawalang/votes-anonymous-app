@@ -44,11 +44,11 @@ contract VotingBallot {
         hasVoted[msg.sender] = true;
     }
 
-    function getIndexOfWinner () public view returns(uint) {
+    function getIndexOfWinner () public view returns (uint) {
         uint largest = 0;
-        uint index = 0;
+        uint index;
         for (uint i = 0; i < proposals.length; i++) {
-            if(proposals[i].noOfVotes > largest) {
+            if(proposals[index].noOfVotes > largest) {
                 largest = proposals[i].noOfVotes;
                 index = i;
             }
