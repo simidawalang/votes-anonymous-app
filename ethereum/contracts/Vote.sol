@@ -6,7 +6,7 @@ contract VotingBallot {
     struct Proposal {
         string proposal;
         string name;
-        address nominee;
+        address candidateAddress;
         bool hasEntered;
         uint noOfVotes;
     }
@@ -14,21 +14,24 @@ contract VotingBallot {
     string public nameOfContest;
     address public organizer;
     address[] public candidates;
-    address[] public traitorArr;
+    address[] private traitorArr;
     Proposal[] public proposals;
     mapping(address => bool) public hasRegistered;
     mapping(address => bool) public hasVoted;
     uint public totalNoOfVotes;
+    address[] private winners; // Made a dynamic array in case there's a tie
     mapping(address => bool) hasEntered;
     bool public isContestOver;
 
     constructor (string memory contestName) {
         nameOfContest = contestName;
         organizer = msg.sender;
+        isContestOver = false;
     }
 
     modifier contestOngoing {
-        require(isContestOver = false);
+        // modifier for certain actions to be performed only when the contest is still on
+        require(isContestOver == false);
         _;
     }
 
@@ -39,13 +42,13 @@ contract VotingBallot {
         Proposal memory newProposal = Proposal({
             proposal: props,
             name: name,
-            nominee: msg.sender,
+            candidateAddress: msg.sender,
             hasEntered: true,
             noOfVotes: 0
         });
 
         if(traitor == true) {
-            require(traitorArr.length < 1);
+            require(traitorArr.length < 1); // only one traitor allowed
             traitorArr.push(msg.sender);
         } 
 
@@ -55,29 +58,27 @@ contract VotingBallot {
     }
 
     function vote (uint index) public contestOngoing {
-        require(!hasEntered[msg.sender]);
         require(!hasVoted[msg.sender]);
-
+        require(proposals[index].candidateAddress != msg.sender); // You can't vote for yourself
         Proposal storage proposal = proposals[index];
         proposal.noOfVotes++;
         totalNoOfVotes++;
         hasVoted[msg.sender] = true;
     }
 
-    function getIndexOfWinner () public contestOngoing returns (uint) {
+    function getWinner () public returns (address[] memory) {
         uint largest = 0;
-        uint index;
         for (uint i = 0; i < proposals.length; i++) {
-            if(proposals[index].noOfVotes > largest) {
-                largest = proposals[i].noOfVotes;
-                index = i;
+            if(proposals[i].noOfVotes >= largest) {
+                winners.push(proposals[i].candidateAddress);
             }
         }
         isContestOver = true;
-        return index;
+        return winners;
     }
 
     function getTraitor () public view returns (address) {
+        require(isContestOver == true);
         return traitorArr[0];
     }
 }
