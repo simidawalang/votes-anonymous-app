@@ -5,9 +5,10 @@
 
 @import "./components/buttons.scss";
 @import "./components/header.scss";
+@import "./components/layout.scss";
 
 @import "./pages/index.scss";
-@import "./pages/compete.scss";
+@import "./pages/poll.scss";
 
 * {
     margin: 0;
@@ -23,10 +24,15 @@ body {
 a, a:hover {
     color: $dark-green;
     text-decoration: none;
+    cursor: pointer;
 }
 
 h1, h2, h3, h4, h5, h6, button {
  font-family: 'Open Sans', sans-serif;
- text-transform: uppercase;
  color: $dark-green;
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
 }

@@ -1,16 +1,13 @@
-import React, {
-  MouseEvent,
-  useRef,
-  useState,
-  FormEvent,
-  useEffect,
-} from "react";
+import React, { MouseEvent, useState, useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Button from "../components/Button";
+import { motion } from "framer-motion";
 import { ethers } from "ethers";
-
+import Image from "next/image";
+import amongUs from "../public/images/among-us-crew.png";
+import RightArrow from "../public/icons/right-arrow";
 declare global {
   interface Window {
     ethereum: any;
@@ -51,8 +48,6 @@ const Home: NextPage<PropType> = ({ p1 }) => {
     }
   };
 
-  
-
   return (
     <div className="home-page">
       <Head>
@@ -60,15 +55,37 @@ const Home: NextPage<PropType> = ({ p1 }) => {
         <meta name="description" content="An anonymous voting game" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <p>
-        You don't get to see the winners or their addresses until voting is
-        over.
-      </p>
-
-      <Button onClick={connectWallet} color={`${connected ? 'green' : 'blue'}`}>
-        {connected ? "Wallet Connected" : isLoading ? "Loading" : "Connect"}
-      </Button>
-      <Link href="/compete">Create Poll</Link>
+        <header>
+          <div className="home-page-header-div">
+            <h1>
+              <motion.span>Think AmongUs...</motion.span>
+              <motion.span>but for voting.</motion.span>
+            </h1>
+            <p>
+              A fun dApp for taking polls.
+            </p>
+            <div className="actions">
+              <Button
+                onClick={connectWallet}
+                color={`${connected ? "green" : "blue"}`}
+                size="big"
+              >
+                {connected
+                  ? "Wallet Connected"
+                  : isLoading
+                  ? "Loading"
+                  : "Connect"}
+              </Button>
+              <span className="span-link">
+                <Link href="/poll/new">Create Poll</Link>
+                <RightArrow />
+              </span>
+            </div>
+          </div>
+          <div className="home-page-header-div">
+            <Image src={amongUs} />
+          </div>
+        </header>
     </div>
   );
 };

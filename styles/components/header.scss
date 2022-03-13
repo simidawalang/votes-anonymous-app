@@ -2,9 +2,12 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 0;
     & .nav-brand {
         font-size: 2.5rem;
         color: $dark-green;
+    }
+    & ul a {
+        margin-left: 25px;
     }
 }

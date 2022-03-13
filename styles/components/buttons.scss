@@ -4,6 +4,9 @@ button {
     letter-spacing: 0.5px;
     border: 0;
     padding: 5px 8px;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .green {
@@ -14,4 +17,8 @@ button {
 .blue {
     background-color: blue;
     color: $white;
+}
+
+.big {
+    padding: 10px 16px;
 }

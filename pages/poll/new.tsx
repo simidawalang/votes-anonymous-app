@@ -1,5 +1,6 @@
 import React, { FormEvent, useRef } from "react";
-import Button from "../components/Button";
+import { motion } from "framer-motion";
+import Button from "../../components/Button";
 
 const EnterContest = () => {
   const pollTitleRef = useRef<HTMLInputElement | null>(null);
@@ -12,8 +13,8 @@ const EnterContest = () => {
   };
   return (
     <div className="compete-page">
-      <form onSubmit={handleSubmit}>
-        <h3>Create Contest</h3>
+      <motion.form onSubmit={handleSubmit} animate={{y: 100}}>
+        <h3>Create Poll</h3>
         <div className="input-pair">
           <label htmlFor="name-of-contest">Title of Contest:</label>
           <input
@@ -37,7 +38,7 @@ const EnterContest = () => {
           />
         </div>
         <Button color="green">Create</Button>
-      </form>
+      </motion.form>
     </div>
   );
 };
