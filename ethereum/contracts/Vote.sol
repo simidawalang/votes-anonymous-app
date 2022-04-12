@@ -13,7 +13,7 @@ contract VotingBallot {
 
     string public nameOfContest;
     address public organizer;
-    address[] public candidates;
+    address[] private candidates;
     address[] private traitorArr;
     Proposal[] public proposals;
     mapping(address => bool) public hasRegistered;
@@ -67,6 +67,7 @@ contract VotingBallot {
     }
 
     function getWinner () public returns (address[] memory) {
+        // returns an array of addresses in case there's a tie
         uint largest = 0;
         for (uint i = 0; i < proposals.length; i++) {
             if(proposals[i].noOfVotes >= largest) {
