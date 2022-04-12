@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-contract VotingBallot {
+contract VotesAnon {
     struct Proposal {
         string proposal;
         string name;
